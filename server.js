@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const express = require("express");
 const app = express();
 app.use(express.json());
@@ -18,6 +18,12 @@ app.get('/files', async (req, res) => {
     const response = await files.find({}).toArray()
     res.send(response)
 })
+app.get('/files/:id', async (req, res) => {
+    const response = await files.find({ _id: ObjectId(req.params.id) }).toArray()
+    res.send(response)
+})
+
+
 
 app.get('/users', async (req, res) => {
     const response = await users.find({}).toArray()
