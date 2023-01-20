@@ -13,22 +13,18 @@ const flash = new MongoClient(DB_URI);
 const users = flash.db("flashfiles").collection("users")
 const files = flash.db("flashfiles").collection("files")
 
+const routes = () => {
+    return { users, files }
+}
 
-app.get('/files', async (req, res) => {
-    const response = await files.find({}).toArray()
-    res.send(response)
-})
-app.get('/files/:id', async (req, res) => {
-    const response = await files.find({ _id: ObjectId(req.params.id) }).toArray()
-    res.send(response)
-})
+module.exports = routes
 
 
+app.use('/files', require('./Routers/flashFiles'))
+app.use('/users', require('./Routers/usersRouter'))
 
-app.get('/users', async (req, res) => {
-    const response = await users.find({}).toArray()
-    res.send(response)
-})
+
+
 
 
 
